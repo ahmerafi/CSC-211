@@ -46,14 +46,31 @@ class JunkCar extends automobile {
    }
 }
 
+class TestList {
+    automobile[] automobileArray = new automobile[3];
+    
+    public void insert(automobile a, int i) {
+        automobileArray[i] = a;
+    }
+    
+    public String getInfo(int i) {
+        return automobileArray[i].getInfo();
+    }
+}
+
 
 class Main {
     public static void main(String[] args) {
+        TestList arraylist = new TestList();
+        
         SportsCar car1 = new SportsCar();
         car1.setmodel("Cool Car");
         car1.setyear(2024);
         car1.honk();
-        String car1info = car1.getInfo();
+        
+        arraylist.insert(car1,0);
+        
+        String car1info = arraylist.getInfo(0);
         System.out.printf(car1info);
     }
 }
