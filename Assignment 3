@@ -1,1 +1,62 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
 
+import java.util.*;
+
+class automobile {
+    public String model;
+    public Integer year = 0;
+    
+    public void honk() {
+        System.out.println("Honk");
+    }
+    
+    public void setmodel(String s) {
+        this.model = s;
+    }
+    
+    public void setyear(int y) {
+        this.year = y;
+    }
+    
+    public String getInfo() {
+        String info = "Car Model: " + model + "%n" + "Car Year: " + year.toString();
+        return info;
+    }
+}
+
+class Car extends automobile {
+   private String speed = "Average";
+
+   @Override public void honk() {
+       System.out.println("Honk");
+   }
+}
+
+class SportsCar extends automobile {
+   private String speed = "Fast";
+
+   @Override public void honk() {
+       System.out.println("HONK");
+   }
+}
+
+class JunkCar extends automobile {
+   private String speed = "Slow";
+
+   @Override public void honk() {
+       System.out.println("honk");
+   }
+}
+
+
+class Main {
+    public static void main(String[] args) {
+        SportsCar car1 = new SportsCar();
+        car1.setmodel("Cool Car");
+        car1.setyear(2024);
+        car1.honk();
+        String car1info = car1.getInfo();
+        System.out.printf(car1info);
+    }
+}
