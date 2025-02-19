@@ -3,6 +3,7 @@ import java.util.*;
 class automobile {
     public String model;
     public Integer year = 0;
+    public int acceleration;
     
     public void honk() {
         System.out.println("Honk");
@@ -16,34 +17,63 @@ class automobile {
         this.year = y;
     }
     
-    public String getInfo() {
-        String info = "Car Model: " + model + "%n" + "Car Year: " + year.toString();
+    public String toString() {
+        String info = "Car Model: " + model + "%n" + "Car Year: " + year.toString() + "%n" + "Car Speed: " + acceleration;
         return info;
+    }
+    
+    public void accelerate() {
+        String speedWord = "average";
+        System.out.println("The " + model + " accelerates at a " + speedWord + " pace.");
+    }
+    
+     public void reverse() {
+        String speedWord = "average";
+        System.out.println("The " + model + " reverses at a " + speedWord + " pace.");
     }
 }
 
 class Car extends automobile {
-   private String speed = "Average";
+   public int acceleration = 0;
 
    @Override public void honk() {
        System.out.println("Honk");
    }
+   
 }
 
 class SportsCar extends automobile {
-   private String speed = "Fast";
+   public int acceleration = 1;
 
    @Override public void honk() {
        System.out.println("HONK");
    }
+   @Override public void accelerate() {
+        String speedWord = "fast";
+        System.out.println("The " + model + " accelerates at a " + speedWord + " pace.");
+    }
+    
+    @Override public void reverse() {
+        String speedWord = "fast";
+        System.out.println("The " + model + " reverses at a " + speedWord + " pace.");
+    }
 }
 
 class JunkCar extends automobile {
-   private String speed = "Slow";
+   public int acceleration = -1;
 
    @Override public void honk() {
        System.out.println("honk");
    }
+   @Override public void accelerate() {
+        String speedWord = "slow";
+        System.out.println("The " + model + " accelerates at a " + speedWord + " pace.");
+    }
+    
+    @Override public void reverse() {
+        String speedWord = "slow";
+        System.out.println("The " + model + " reverses at a " + speedWord + " pace.");
+    }
 }
 
 class TestList {
@@ -54,7 +84,12 @@ class TestList {
     }
     
     public String getInfo(int i) {
-        return automobileArray[i].getInfo();
+        return automobileArray[i].toString();
+    }
+    
+    public String compareTo(int i, int o) {
+        String comparison = automobileArray[i].model + " is " + automobileArray[i].acceleration + " in ";
+        return comparison;
     }
 }
 
@@ -67,6 +102,19 @@ class Main {
         car1.setmodel("Cool Car");
         car1.setyear(2024);
         car1.honk();
+        car1.accelerate();
+        
+        Car car2 = new Car();
+        car2.setmodel("Car");
+        car2.setyear(2022);
+        car2.honk();
+        car2.accelerate();
+        
+        JunkCar car3 = new JunkCar();
+        car3.setmodel("Bad Car");
+        car3.setyear(2000);
+        car3.honk();
+        car3.accelerate();
         
         arraylist.insert(car1,0);
         
