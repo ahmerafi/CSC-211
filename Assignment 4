@@ -2,11 +2,11 @@ import java.util.*;
 
 class Main {
     public static void main(String[] args) {
-        Circle shape1 = new Circle(0);
+        Circle shape1 = new Circle();
         int num1 = shape1.get();
         System.out.println(num1);
         
-        Rectangle shape2 = new Rectangle(4);
+        Rectangle shape2 = new Rectangle();
         int num2 = shape2.get();
         System.out.println(num2);
         shape2.set(6);
@@ -34,14 +34,14 @@ class Shape {
 
 
 class Circle extends Shape {
-    public Circle(int sides) {
-        super(sides);
+    public Circle() {
+        super(0);
     }
 }
 
 class Rectangle extends Shape {
-    public Rectangle(int sides) {
-        super(sides);
+    public Rectangle() {
+        super(4);
     }
     
 }
