@@ -1,0 +1,47 @@
+import java.util.*;
+
+class Main {
+    public static ArrayList<Integer> fibonacciiterative(int amount) {
+        ArrayList<Integer> fibonacciarray = new ArrayList<Integer>();
+        fibonacciarray.add(0);
+        fibonacciarray.add(1);
+        if (amount - 1 <= 0) {
+           for (int i = 2; i == amount + 1; --i) {
+               fibonacciarray.remove(i);
+           }
+        } 
+        else {
+            for (int i = 1; i <= amount - 1; ++i) {
+               int newval = fibonacciarray.get(i) + fibonacciarray.get(i - 1);
+               fibonacciarray.add(newval);
+            }
+        }
+        return fibonacciarray;
+    }
+    
+    public static void fibonaccirecursive(int amount, ArrayList<Integer> array) {
+        if (amount - 1 <= 0) {
+            
+        }
+        else {
+            if (array.size() <= (amount)) {
+                int newval = array.get(array.size() - 1) + array.get(array.size() - 2);
+                array.add(newval);
+                if (array.size() > amount) {
+                    System.out.println(array);
+                }
+                fibonaccirecursive(amount,array);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> fibbotable = fibonacciiterative(15);
+        System.out.println(fibbotable);
+        
+        ArrayList<Integer> fibonacciarray2 = new ArrayList<Integer>();
+        fibonacciarray2.add(0);
+        fibonacciarray2.add(1);
+        fibonaccirecursive(15,fibonacciarray2);
+    }
+}
