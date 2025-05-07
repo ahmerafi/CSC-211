@@ -34,7 +34,22 @@ class Main {
             }
         }
     }
-
+    
+    public static ArrayList<Integer> decimaltobinaryiterative(int number) {
+        ArrayList<Integer> binarytable = new ArrayList<Integer>();
+        ArrayList<Integer> binarytable2 = new ArrayList<Integer>();
+        while (number != 0) {
+            binarytable.add(number % 2);
+            number = number/2;
+        }
+        
+        for (int i = binarytable.size() - 1; i >= 0; i--) {
+            binarytable2.add(binarytable.get(i));
+        }
+       
+        return binarytable2;
+    }
+    
     public static void main(String[] args) {
         ArrayList<Integer> fibbotable = fibonacciiterative(15);
         System.out.println(fibbotable);
@@ -43,5 +58,8 @@ class Main {
         fibonacciarray2.add(0);
         fibonacciarray2.add(1);
         fibonaccirecursive(15,fibonacciarray2);
+        
+        ArrayList<Integer> binarytest = decimaltobinaryiterative(32);
+        System.out.println(binarytest);
     }
 }
