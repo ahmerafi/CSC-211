@@ -1,53 +1,119 @@
 import java.util.*;
 
 class CommercePrototype {
-    class User {
+    public static class User {
        double discount;
        String membershipType = "None";
+       
+       Order orderDetails = new Order();
+       
+       public User() {
+           this.discount = 0;
+           this.membershipType = "None";
+           this.orderDetails = new Order();
+       }
     }
     
-    class Administrator extends User {
-        
+    static class Administrator extends User {
+        String membershipType = "Admin";
     }
     
-    class Customer extends User {
-        
+    static class Customer extends User {
+        String membershipType = "Default";
     }
     
-    class Order {
+    static class Order {
         
-        ArrayList<Object> currentOrder = new ArrayList<Object>();
+        ArrayList<Product> currentOrder = new ArrayList<Product>();
         
         double returnTotal(ArrayList<Object> produce) {
             double total = 0;
-            for (Object item : this.currentOrder) {
-                total += item.GetPrice();
+            for (Product item : this.currentOrder) {
+                double price = item.GetPrice();
+                total += price;
             }
             return total;
         }
         
         public Order() {
-            this.currentOrder = new ArrayList<Object>();
+            this.currentOrder = new ArrayList<Product>();
+        }
+        
+        public Order(ArrayList<Product> orderList) {
+            this.currentOrder = orderList;
+        }
+        
+        public void addToOrder(Product currentProduct, int quantity) {
+            for (Product item : currentOrder) {
+                if (item.GetName().contains(currentProduct.GetName())) {
+                    item.addQuantity(quantity);
+                }
+                else {
+                    this.currentOrder.add(currentProduct);
+                    currentProduct.addQuantity(quantity);
+                }
+            }
         }
     }
     
-    class Product {
-        int Price;
+    static class Product {
+        double Price;
         int Quantity;
+        String Name;
+        
+        public double GetPrice() {
+            return Price*Quantity;
+        }
+        
+        public String GetName() {
+            return Name;
+        }
+        
+        public Product() {
+            this.Name = null;
+            this.Quantity = 0;
+        }
+        
+        public void addQuantity(int num) {
+            if (this.Quantity + num <= 0) {
+                this.Quantity = 0;
+            }
+            else {
+                this.Quantity += num;
+            }
+        }
+        
     }
     
-    class Electronic extends Product {
+    static class Electronic extends Product {
         double Price = 35;
+        public Electronic(String newName, int newQuantity, double newPrice) {
+            this.Name = newName;
+            this.Quantity = newQuantity;
+            this.Price = newPrice;
+        }
     }
     
-    class Clothing extends Product {
+    static class Clothing extends Product {
         double Price = 25;
+        public Clothing(String newName, int newQuantity, double newPrice) {
+            this.Name = newName;
+            this.Quantity = newQuantity;
+            this.Price = newPrice;
+        }
     }
     
-    class Grocery extends Product {
+    static class Grocery extends Product {
         double Price = 20;
+        public Grocery(String newName, int newQuantity, double newPrice) {
+            this.Name = newName;
+            this.Quantity = newQuantity;
+            this.Price = newPrice;
+        }
     }
+    
     public static void main(String[] args) {
-        System.out.println("Try programiz.pro");
+        User currentUser = new Customer();
+        
     }
 }
