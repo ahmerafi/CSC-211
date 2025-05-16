@@ -1,0 +1,53 @@
+import java.util.*;
+
+class CommercePrototype {
+    class User {
+       double discount;
+       String membershipType = "None";
+    }
+    
+    class Administrator extends User {
+        
+    }
+    
+    class Customer extends User {
+        
+    }
+    
+    class Order {
+        
+        ArrayList<Object> currentOrder = new ArrayList<Object>();
+        
+        double returnTotal(ArrayList<Object> produce) {
+            double total = 0;
+            for (Object item : this.currentOrder) {
+                total += item.GetPrice();
+            }
+            return total;
+        }
+        
+        public Order() {
+            this.currentOrder = new ArrayList<Object>();
+        }
+    }
+    
+    class Product {
+        int Price;
+        int Quantity;
+    }
+    
+    class Electronic extends Product {
+        double Price = 35;
+    }
+    
+    class Clothing extends Product {
+        double Price = 25;
+    }
+    
+    class Grocery extends Product {
+        double Price = 20;
+    }
+    public static void main(String[] args) {
+        System.out.println("Try programiz.pro");
+    }
+}
