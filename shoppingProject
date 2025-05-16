@@ -4,14 +4,16 @@ class CommercePrototype {
     public static class User {
        double discount;
        String membershipType = "None";
+       */ info about user, such as membership and discount */
        
        Order orderDetails = new Order();
-       
+       */intializes order details*/
        public User() {
            this.discount = 0;
            this.membershipType = "None";
            this.orderDetails = new Order();
        }
+       */intializes user*/
     }
     
     static class Administrator extends User {
