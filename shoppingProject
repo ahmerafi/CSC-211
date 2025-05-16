@@ -26,10 +26,11 @@ class CommercePrototype {
         
         ArrayList<Product> currentOrder = new ArrayList<Product>();
         
-        double returnTotal(ArrayList<Object> produce) {
+        double returnTotal() {
             double total = 0;
+            /* loops through currentOrder arraylist and gets the price, then adds it */
             for (Product item : this.currentOrder) {
-                double price = item.GetPrice();
+                double price = item.GetPrice()*item.GetQuantity();
                 total += price;
             }
             return total;
@@ -43,39 +44,50 @@ class CommercePrototype {
             this.currentOrder = orderList;
         }
         
+        /* initialization for the order class */
+        
         public void addToOrder(Product currentProduct, int quantity) {
-            for (Product item : currentOrder) {
-                if (item.GetName().contains(currentProduct.GetName())) {
-                    item.addQuantity(quantity);
-                }
-                else {
-                    this.currentOrder.add(currentProduct);
+            if (currentOrder.contains(currentProduct.GetName())) {
                     currentProduct.addQuantity(quantity);
                 }
+            else {
+                this.currentOrder.add(currentProduct);
+                currentProduct.addQuantity(quantity);
             }
         }
     }
     
-    static class Product {
+    static class Product { /* product superclass */
+        /* information about the product initialized here */
+        
         double Price;
         int Quantity;
         String Name;
         
+        /* methods for the product classes */
+        
         public double GetPrice() {
-            return Price*Quantity;
+            return Price;
+        }
+        
+        public int GetQuantity() {
+            return Quantity;
         }
         
         public String GetName() {
             return Name;
         }
         
+        
+         /* initialization for superclass */
+         
         public Product() {
             this.Name = null;
             this.Quantity = 0;
         }
         
         public void addQuantity(int num) {
-            if (this.Quantity + num <= 0) {
+            if (this.Quantity + num <= 0) { /* handles negative integers for removal */
                 this.Quantity = 0;
             }
             else {
@@ -86,34 +98,97 @@ class CommercePrototype {
     }
     
     static class Electronic extends Product {
-        double Price = 35;
-        public Electronic(String newName, int newQuantity, double newPrice) {
+        public Electronic(String newName, double newPrice) {
             this.Name = newName;
-            this.Quantity = newQuantity;
             this.Price = newPrice;
         }
+        /* initilization for subclass */
     }
     
     static class Clothing extends Product {
-        double Price = 25;
-        public Clothing(String newName, int newQuantity, double newPrice) {
+        public Clothing(String newName, double newPrice) {
             this.Name = newName;
-            this.Quantity = newQuantity;
             this.Price = newPrice;
         }
+        /* initilization for subclass */
     }
     
     static class Grocery extends Product {
-        double Price = 20;
-        public Grocery(String newName, int newQuantity, double newPrice) {
+        public Grocery(String newName, double newPrice) {
             this.Name = newName;
-            this.Quantity = newQuantity;
             this.Price = newPrice;
         }
+        /* initilization for subclass */
+    }
+    
+    static Product searchFunction(Product[] productList) {
+        Scanner scnr = new Scanner(System.in);
+        boolean search = false;
+        Product searchedName = null;
+        while (search == false) {
+            String searchName = scnr.nextLine();
+            for (Product produceName : productList) {
+                if (produceName.GetName().contains(searchName)) { /* checks if pattern is inside of the product's name */
+                    if (searchName.matches(produceName.GetName())) { /* checks if the typed string matches product 1 to 1 */
+                        searchedName = produceName;
+                        search = true;
+                        /* breaks the loop and returns the product */
+                        break;
+                    }
+                    else {
+                        /* detects if pattern found */
+                        System.out.println("name found"); 
+                        System.out.println(produceName.GetName()); 
+                    }
+                }
+            }
+        }
+        return searchedName;
     }
     
     public static void main(String[] args) {
         User currentUser = new Customer();
         
+        Scanner scnr = new Scanner(System.in);
+        
+        Electronic product1 = new Electronic("Phone",65);
+        Clothing product2 = new Clothing("Hoodie",35);
+        Grocery product3 = new Grocery("Apple",15);
+        Electronic CheckOut = new Electronic("CheckOut",0);
+        Product[] productList = {product1, product2, product3, CheckOut};
+        
+        /* all products listed here is sent to the search function, checkout is there as a placeholder for the checkout string */
+        
+        double tax = .075;
+
+        while (true) {
+            System.out.println("Welcome to the ECommerce App, type up a name and we'll see if we have it for you, else just type in CheckOut to confirm your order.");
+            while (true) {
+                /* main loop for declaring orders */
+                Product currentItem = searchFunction(productList);
+                if (currentItem.GetName() == "CheckOut") {
+                     /* gets total price from orderdetails, then calculates the price with discount and tax */
+                    double checkoutTotal = currentUser.orderDetails.returnTotal();
+                    double checkouttotal = (checkoutTotal + (checkoutTotal*tax))/(1 + currentUser.discount);
+                    System.out.println("Your total checkout is " + checkoutTotal);
+                }
+                else {
+                    System.out.println("Current Product Selected: " + currentItem.GetName());
+                    System.out.println("Item Price: $" + currentItem.GetPrice());
+                    System.out.println("How many would you like to order?");
+                    int itemQuantity = scnr.nextInt();
+                    /* gets the user's entered quantity, checks if its over 0, else it just breaks the loop without changing anything */
+                    if (itemQuantity > 0) {
+                        currentUser.orderDetails.addToOrder(currentItem,itemQuantity);
+                        System.out.println(currentItem.GetQuantity() + " " + currentItem.GetName() + " ordered");
+                    }
+                    else {
+                        System.out.println("no number over 0 declared, no " + currentItem.GetName() + " ordered");
+                    }
+                    break; 
+                }
+            }
+        }
+        /* while function loops through the store functions completely without ever being closed out until done */
     }
 }
